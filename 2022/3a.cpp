@@ -6,10 +6,9 @@ using ld = long double;
 auto getPriority(const auto& s) {
     const auto sz = s.size();
     const auto half = unordered_set(s.begin(), s.begin() + sz / 2);
-    auto view =
-        s | views::drop(sz / 2)
-        | views::filter([&](auto c) { return half.find(c) != half.end(); })
-        | views::common;
+    auto view = s | views::drop(sz / 2)
+                | views::filter([&](auto c) { return half.contains(c); })
+                | views::common;
     return isupper(view.front()) ? view.front() - 'A' + 27
                                  : view.front() - 'a' + 1;
 }

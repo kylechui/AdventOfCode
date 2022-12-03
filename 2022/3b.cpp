@@ -7,11 +7,10 @@ auto getPriority(const auto& tup) {
     const auto [sack1, sack2, sack3] = tup;
     const auto set1 = unordered_set(sack1.begin(), sack1.end());
     const auto set2 = unordered_set(sack2.begin(), sack2.end());
-    auto view =
-        sack3 | views::filter([&](const auto c) {
-            return set1.find(c) != set1.end() && set2.find(c) != set2.end();
-        })
-        | views::common;
+    auto view = sack3 | views::filter([&](const auto c) {
+                    return set1.contains(c) && set2.contains(c);
+                })
+                | views::common;
     return isupper(view.front()) ? view.front() - 'A' + 27
                                  : view.front() - 'a' + 1;
 }
