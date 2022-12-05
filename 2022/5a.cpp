@@ -16,7 +16,7 @@ class Crane {
 };
 
 Crane::Crane() {
-    crates = vector<string>(9);
+    crates.resize(9);
     for (auto line = string{}; getline(cin, line) && !isdigit(line[1]);) {
         for (size_t i = 1; i < line.size(); i += 4) {
             if (line[i] != ' ') {
