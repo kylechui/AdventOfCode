@@ -6,9 +6,10 @@ using ld = long double;
 class Directory {
    public:
     Directory(const auto& name);
-    auto getSize() const -> ll;
-    auto getName() const -> string;
-    auto getSubDirectories() const -> vector<shared_ptr<Directory>>;
+    [[nodiscard]] auto getSize() const -> ll;
+    [[nodiscard]] auto getName() const -> string;
+    [[nodiscard]] auto getSubDirectories() const
+        -> vector<shared_ptr<Directory>>;
     auto addFile(const auto& fileSize) -> void;
     auto addSubDirectory(const auto& directory) -> shared_ptr<Directory>;
 
