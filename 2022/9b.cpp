@@ -18,7 +18,7 @@ auto main() -> int {
             regex_match(line, match, regex("^(.) (\\d+)$"))) {
             const auto dir = match.str(1)[0];
             const auto count = stoll(match.str(2));
-            for (auto _ = 0; _ < count; _++) {
+            for ([[maybe_unused]] const auto _ : views::iota(0, count)) {
                 knots[0].first -= dir == 'L';
                 knots[0].first += dir == 'R';
                 knots[0].second -= dir == 'D';
