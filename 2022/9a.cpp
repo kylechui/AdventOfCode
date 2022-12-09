@@ -27,16 +27,11 @@ auto main() -> int {
                 for (auto i = 1; i < NUM_KNOTS; i++) {
                     const auto dx = knots[i - 1].first - knots[i].first;
                     const auto dy = knots[i - 1].second - knots[i].second;
-                    if (abs(dx) + abs(dy) >= 3) {
-                        knots[i].first += dx > 0 ? 1 : -1;
-                        knots[i].second += dy > 0 ? 1 : -1;
-                    } else if (abs(dx) >= 2) {
-                        knots[i].first += dx > 0 ? 1 : -1;
-                    } else if (abs(dy) >= 2) {
-                        knots[i].second += dy > 0 ? 1 : -1;
+                    if (abs(dx) > 1 || abs(dy) > 1) {
+                        knots[i].first += (dx > 0) - (dx < 0);
+                        knots[i].second += (dy > 0) - (dy < 0);
                     }
                 }
-
                 seen.insert(knots.back());
             }
         }
