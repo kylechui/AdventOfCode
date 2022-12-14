@@ -7,8 +7,7 @@ auto get_representation(const auto& packet) -> vector<pair<optional<ll>, ll>> {
     auto representation = vector<pair<optional<ll>, ll>>{};
     auto cur = optional<ll>{};
     auto depth = 0ll;
-    for (size_t i{0}; i < packet.size(); i++) {
-        auto c = packet[i];
+    ranges::for_each(packet, [&](const auto& c) {
         if (isdigit(c)) {
             cur = 10 * cur.value_or(0ll);
             cur.value() += c - '0';
@@ -23,7 +22,7 @@ auto get_representation(const auto& packet) -> vector<pair<optional<ll>, ll>> {
             depth += c == '[';
             depth -= c == ']';
         }
-    }
+    });
     return representation;
 }
 
