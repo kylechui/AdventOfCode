@@ -9,7 +9,9 @@ auto main() -> int {
         lines.push_back(line);
     }
 
-    auto rock = set<pair<ll, ll>>{};
+    auto rock = unordered_set<pair<ll, ll>, decltype([](const auto& p) {
+                                  return p.first * 1000 + p.second;
+                              })>{};
     auto highest = unordered_map<ll, ll>{};
     for (const auto& line : lines) {
         auto re = regex{"(\\d+),(\\d+)"};
