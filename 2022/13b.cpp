@@ -3,26 +3,27 @@ using namespace std;
 using ll = long long;
 using ld = long double;
 
-auto get_representation(const string& packet) -> vector<pair<ll, ll>> {
-    auto representation = vector<pair<ll, ll>>{};
-    auto cur = 0, depth = 0;
-    for (size_t i{0}; i < packet.size(); i++) {
-        auto c = packet[i];
+auto get_representation(const string& packet)
+    -> vector<pair<optional<ll>, ll>> {
+    auto representation = vector<pair<optional<ll>, ll>>{};
+    auto cur = optional<ll>{};
+    auto depth = 0ll;
+    ranges::for_each(packet, [&](const auto& c) {
         if (isdigit(c)) {
-            cur *= 10;
-            cur += c - '0';
+            cur = 10 * cur.value_or(0ll);
+            cur.value() += c - '0';
         } else {
-            if (isdigit(packet[i - 1])) {
+            if (cur.has_value()) {
                 representation.push_back({cur, depth});
             }
+            cur.reset();
             if (c == ']') {
-                representation.push_back({INT_MIN, depth});
+                representation.push_back({cur, depth});
             }
             depth += c == '[';
             depth -= c == ']';
-            cur = 0;
         }
-    }
+    });
     return representation;
 }
 
@@ -32,7 +33,7 @@ auto main() -> int {
         if (!line.empty()) input.push_back(line);
     }
 
-    vector<vector<pair<ll, ll>>> representations{};
+    vector<vector<pair<optional<ll>, ll>>> representations{};
     ranges::transform(input, back_inserter(representations),
                       get_representation);
     ranges::sort(representations);
