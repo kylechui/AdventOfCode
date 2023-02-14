@@ -4,16 +4,17 @@ using namespace std;
 using ll = long long;
 using ld = long double;
 
-int main() {
-    auto maxCookies = ll{}, curCookies = ll{};
-    auto s = string{};
-    while (getline(cin, s)) {
-        if (s.empty()) {
-            maxCookies = max(maxCookies, curCookies);
-            curCookies = 0;
-        } else {
-            curCookies += stoll(s);
-        }
+auto main() -> int {
+    auto lines = vector<string>{};
+    for (auto line = string{}; getline(cin, line);) {
+        lines.push_back(line);
     }
-    cout << max(maxCookies, curCookies) << endl;
+
+    auto cookies =
+        lines | views::split("") | views::transform([](const auto& v) {
+            return accumulate(
+                v.begin(), v.end(), 0,
+                [](auto sum, const auto& s) { return sum + stoi(s); });
+        });
+    cout << ranges::max(cookies) << endl;
 }

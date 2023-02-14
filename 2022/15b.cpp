@@ -68,9 +68,6 @@ auto main() -> int {
     }
 
     ranges::sort(positions);
-    for (const auto& [a, b] : positions) {
-        cout << a << ' ' << b << endl;
-    }
     const auto& [x, y] = positions.front();
     cout << x * 4'000'000ll + y << endl;
 }
