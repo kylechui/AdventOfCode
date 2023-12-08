@@ -1,0 +1,4 @@
+(executable
+ (public_name day1a)
+ (name day1a)
+ (libraries advent))
