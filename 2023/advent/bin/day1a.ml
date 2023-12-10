@@ -1,5 +1,5 @@
 let lines =
-  let channel = open_in "test/day1a.txt" in
+  let channel = open_in "test/a.txt" in
   try
     let rec read_list' acc =
       try
@@ -31,7 +31,12 @@ let get_last_dig =
 let () =
   lines
   |> List.map (fun line ->
-         let first_num = line |> get_first_dig |> int_of_char in
-         let last_num = line |> get_last_dig |> int_of_char in
+         let first_num =
+           line |> get_first_dig |> int_of_char
+           |> Fun.flip ( - ) (Char.code '0')
+         in
+         let last_num =
+           line |> get_last_dig |> int_of_char |> Fun.flip ( - ) (Char.code '0')
+         in
          (10 * first_num) + last_num)
   |> List.fold_left ( + ) 0 |> print_int
