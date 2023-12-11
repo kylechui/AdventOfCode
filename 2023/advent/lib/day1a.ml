@@ -1,5 +1,5 @@
-let lines =
-  let channel = open_in "test/a.txt" in
+let lines fname =
+  let channel = open_in fname in
   try
     let rec read_list' acc =
       try
@@ -28,8 +28,8 @@ let get_last_dig =
   in
   fun line -> get_last_dig' line ' '
 
-let () =
-  lines
+let run fname =
+  lines fname
   |> List.map (fun line ->
          let first_num =
            line |> get_first_dig |> int_of_char
