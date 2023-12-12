@@ -6,4 +6,5 @@ match (day, part) with
 | 1, 'a' -> Advent.Day1a.run fname
 | 1, 'b' -> Advent.Day1b.run fname
 | 2, 'a' -> Advent.Day2a.run fname
+| 2, 'b' -> Advent.Day2b.run fname
 | _ -> failwith "Invalid day/part combination"
