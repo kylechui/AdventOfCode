@@ -12,31 +12,14 @@ let lines fname =
     print_endline ("Error: " ^ err);
     []
 
-let is_digit c = c >= '0' && c <= '9'
-
-let get_first_dig =
-  let get_first_dig' =
-    String.fold_left (fun acc c ->
-        if is_digit acc || not (is_digit c) then acc else c)
-  in
-  get_first_dig' ' '
-
-let get_last_dig =
-  let get_last_dig' =
-    String.fold_right (fun c acc ->
-        if is_digit acc || not (is_digit c) then acc else c)
-  in
-  fun line -> get_last_dig' line ' '
+let get_calibration_value line =
+  line |> String.to_seq
+  |> Seq.filter (fun c -> c >= '0' && c <= '9')
+  |> Seq.map (fun c -> Char.(code c - code '0'))
+  |> List.of_seq
+  |> fun lst -> (10 * List.hd lst) + List.(nth lst (length lst - 1))
 
 let run fname =
   lines fname
-  |> List.map (fun line ->
-         let first_num =
-           line |> get_first_dig |> int_of_char
-           |> Fun.flip ( - ) (Char.code '0')
-         in
-         let last_num =
-           line |> get_last_dig |> int_of_char |> Fun.flip ( - ) (Char.code '0')
-         in
-         (10 * first_num) + last_num)
+  |> List.map get_calibration_value
   |> List.fold_left ( + ) 0 |> print_int
