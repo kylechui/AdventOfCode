@@ -1,17 +1,3 @@
-let lines fname =
-  let channel = open_in fname in
-  try
-    let rec read_list' acc =
-      try
-        let line = input_line channel in
-        read_list' (line :: acc)
-      with End_of_file -> List.rev acc
-    in
-    read_list' []
-  with Sys_error err ->
-    print_endline ("Error: " ^ err);
-    []
-
 let my_hash = Hashtbl.create 20
 
 let () =
@@ -36,38 +22,44 @@ let () =
   Hashtbl.add my_hash "nine" 9;
   Hashtbl.add my_hash "9" 9
 
-let contains_at_index str index sub =
-  let sub_len = String.length sub in
-  let str_len = String.length str in
-  if index + sub_len > str_len then false
-  else String.sub str index sub_len = sub
-
-let contains_num_at_index str index =
+let starts_with_num str =
   Hashtbl.fold
     (fun k v r ->
       match r with
-      | None -> if contains_at_index str index k then Some v else None
+      | None -> if String.starts_with ~prefix:k str then Some v else None
       | Some _ -> r)
     my_hash None
 
-let get_first_dig s =
-  let rec get_first_dig' str index =
-    match contains_num_at_index str index with
-    | Some num -> num
-    | None -> get_first_dig' str (index + 1)
-  in
-  get_first_dig' s 0
+let ends_with_num str =
+  Hashtbl.fold
+    (fun k v r ->
+      match r with
+      | None -> if String.ends_with ~suffix:k str then Some v else None
+      | Some _ -> r)
+    my_hash None
 
-let get_last_dig s =
-  let rec get_last_dig' str index =
-    match contains_num_at_index str index with
-    | Some num -> num
-    | None -> get_last_dig' str (index - 1)
-  in
-  get_last_dig' s (String.length s - 1)
+let init str =
+  if String.length str = 0 then "" else String.sub str 0 (String.length str - 1)
+
+let tail str =
+  if String.length str = 0 then "" else String.sub str 1 (String.length str - 1)
+
+let rec get_first_dig = function
+  | "" -> 0
+  | str -> (
+      match starts_with_num str with
+      | Some num -> num
+      | None -> get_first_dig (tail str))
+
+let rec get_last_dig = function
+  | "" -> 0
+  | str -> (
+      match ends_with_num str with
+      | Some num -> num
+      | None -> get_last_dig (init str))
 
 let run fname =
-  lines fname
+  Parser.read_lines fname
   |> List.map (fun line ->
          let first_num = line |> get_first_dig in
          let last_num = line |> get_last_dig in
