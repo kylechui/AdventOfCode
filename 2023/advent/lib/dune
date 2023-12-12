@@ -1,2 +1,3 @@
 (library
- (name advent))
+ (name advent)
+ (modules_without_implementation day))
