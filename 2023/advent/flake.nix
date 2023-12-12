@@ -8,6 +8,6 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in {
       devShells.${system}.default =
-        pkgs.mkShell { buildInputs = [ pkgs.dune_3 pkgs.ocaml ]; };
+        pkgs.mkShell { packages = [ pkgs.dune_3 pkgs.ocaml ]; };
     };
 }
