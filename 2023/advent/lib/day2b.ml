@@ -14,8 +14,8 @@ let get_count drawing color =
   drawing |> List.filter (fun (_, c) -> c = color) |> fun lst ->
   if List.length lst = 0 then 0 else fst (List.hd lst)
 
-let run fname =
-  Parser.read_lines fname |> List.map get_drawings
+let run input =
+  input |> List.map get_drawings
   |> List.map
        (List.fold_left
           (fun (r, g, b) drawing ->

@@ -58,8 +58,8 @@ let rec get_last_dig = function
       | Some num -> num
       | None -> get_last_dig (init str))
 
-let run fname =
-  Parser.read_lines fname
+let run input =
+  input
   |> List.map (fun line ->
          let first_num = line |> get_first_dig in
          let last_num = line |> get_last_dig in

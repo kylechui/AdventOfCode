@@ -5,7 +5,5 @@ let get_calibration_value line =
   |> List.of_seq
   |> fun lst -> (10 * List.hd lst) + List.(nth lst (length lst - 1))
 
-let run fname =
-  Parser.read_lines fname
-  |> List.map get_calibration_value
-  |> List.fold_left ( + ) 0 |> print_int
+let run input =
+  input |> List.map get_calibration_value |> List.fold_left ( + ) 0 |> print_int

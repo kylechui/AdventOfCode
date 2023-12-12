@@ -28,7 +28,7 @@ let possible_drawing drawing =
   let blue_count = get_count "blue" in
   red_count <= 12 && green_count <= 13 && blue_count <= 14
 
-let run fname =
-  Parser.read_lines fname |> List.map parse_line
+let run input =
+  input |> List.map parse_line
   |> List.filter (fun (_, d) -> List.for_all possible_drawing d)
   |> List.map fst |> List.fold_left ( + ) 0 |> print_int
