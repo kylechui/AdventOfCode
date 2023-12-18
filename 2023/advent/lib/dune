@@ -1,3 +1,4 @@
 (library
  (name advent)
- (modules_without_implementation day))
+ (modules_without_implementation day)
+ (libraries base))

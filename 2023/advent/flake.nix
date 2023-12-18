@@ -7,7 +7,9 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      devShells.${system}.default =
-        pkgs.mkShell { packages = [ pkgs.dune_3 pkgs.ocaml ]; };
+      devShells.${system}.default = pkgs.mkShell {
+        buildInputs = [ pkgs.ocamlPackages.findlib pkgs.ocamlPackages.base ];
+        packages = [ pkgs.dune_3 pkgs.ocaml ];
+      };
     };
 }

@@ -8,4 +8,6 @@ match (day, part) with
 | 1, 'b' -> Advent.Day1b.run input
 | 2, 'a' -> Advent.Day2a.run input
 | 2, 'b' -> Advent.Day2b.run input
+| 3, 'a' -> Advent.Day3a.run input
+| 3, 'b' -> Advent.Day3b.run input
 | _ -> failwith "Invalid day/part combination"
