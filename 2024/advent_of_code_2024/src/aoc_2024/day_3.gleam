@@ -1,16 +1,14 @@
 import gleam/bool
 import gleam/int
-import gleam/io
 import gleam/list
 import gleam/option.{Some}
-import gleam/regex
-import gleam/string
+import gleam/regexp
 
 pub fn pt_1(input: String) -> Int {
   let assert Ok(r) =
-    regex.compile("mul\\((\\d+),(\\d+)\\)", regex.Options(False, False))
+    regexp.compile("mul\\((\\d+),(\\d+)\\)", regexp.Options(False, False))
 
-  regex.scan(r, input)
+  regexp.scan(r, input)
   |> list.map(fn(match) {
     let assert [Some(m1), Some(m2)] = match.submatches
     let assert Ok(n1) = int.parse(m1)
@@ -22,13 +20,13 @@ pub fn pt_1(input: String) -> Int {
 
 pub fn pt_2(input: String) -> Int {
   let assert Ok(r) =
-    regex.compile(
+    regexp.compile(
       "mul\\((\\d+),(\\d+)\\)|do\\(\\)|don't\\(\\)",
-      regex.Options(False, False),
+      regexp.Options(False, False),
     )
 
   {
-    regex.scan(r, input)
+    regexp.scan(r, input)
     |> list.fold(#(0, True), fn(acc, match) {
       case match.content {
         "do()" -> #(acc.0, True)
