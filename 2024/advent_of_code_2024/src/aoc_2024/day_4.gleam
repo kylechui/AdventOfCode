@@ -110,6 +110,5 @@ pub fn pt_2(input: String) -> Int {
     zip3(r1, r2, r3)
   })
   |> list.flatten
-  |> list.map(x_mas)
-  |> list.count(fn(b) { b == True })
+  |> list.count(x_mas)
 }
